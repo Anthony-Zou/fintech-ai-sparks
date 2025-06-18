@@ -30,8 +30,7 @@ Bridging the gap between AI promises and production reality in financial service
 - Interactive dashboards with custom UI/UX
 
 **Tech Stack:** Python, Streamlit, scikit-learn, Plotly, yfinance  
-**🎥 Live Demo:** [Coming Soon]  
-**💻 Code:** [day-01-demand-forecasting/](https://github.com/Anthony-Zou/fintech-ai-sparks/tree/main/day-01-demand-forcasting)
+**💻 Code & Live Demo Screenshots:** [day-01-demand-forecasting/](https://github.com/Anthony-Zou/fintech-ai-sparks/tree/main/day-01-demand-forcasting)
 
 ---
 

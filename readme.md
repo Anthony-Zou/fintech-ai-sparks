@@ -5,7 +5,7 @@
 > **Building enterprise-level AI-powered financial analysis platforms.** Real data, real insights, real impact.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Follow-blue)](https://www.linkedin.com/in/zouzeren/)
-[![GitHub Stars](https://img.shields.io/github/stars/Anthony-Zou/fintech_ai_sparks)](https://github.com/Anthony-Zou/fintech_ai_sparks)
+[![GitHub Stars](https://img.shields.io/github/stars/Anthony-Zou/fintech-ai-sparks)](https://github.com/Anthony-Zou/fintech-ai-sparks)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---

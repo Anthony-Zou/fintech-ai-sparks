@@ -32,6 +32,44 @@ A sophisticated fintech application that leverages Yahoo Finance API to provide 
 - **Forecast Plots**: Interactive time series with confidence bands
 - **Technical Overlays**: Multi-indicator analysis charts
 
+## 🖼️ **Screenshots & Demo**
+
+### **📊 Stock Market Analysis**
+
+#### **Price and Volume Overview**
+![Stock Market Data - Price and Volume Overview](screenshot/1.Stock_Market_Data_Price_and_Volume_Overview.png)
+*Real-time stock data with candlestick charts, moving averages, and volume analysis*`1
+sss
+#### **Volume Demand Forecasting**
+![Stock Market Data - Volume Demand Forecasting](screenshot/2.Stock_Market_Data_Volume_Demand_Forecasting.PNG)
+*Advanced ML forecasting models predicting future trading volume with confidence intervals*
+
+---
+
+### **📈 ETF Analysis**
+
+#### **Price and Volume Overview**
+![ETF Data - Price and Volume Overview](screenshot/3.ETF_Data_Price_and_Volume_Overview.PNG)
+*Professional ETF analysis with technical indicators and market trends*
+
+#### **Volume Demand Forecasting**
+![ETF Data - Volume Demand Forecasting](screenshot/4.ETF_Data_Volume_Demand_Forecasting.PNG)
+*ETF volume prediction using Random Forest and Linear Regression models*
+
+---
+
+### **₿ Cryptocurrency Analysis**
+
+#### **Price and Volume Overview**
+![Cryptocurrency - Price and Volume Overview](screenshot/5.Cryptocurrency_Price_and_Volume_Overview.PNG)
+*Cryptocurrency market data with volatility analysis and technical indicators*
+
+#### **Volume Demand Forecasting**
+![Cryptocurrency - Volume Demand Forecasting](screenshot/6.Cryptocurrency_Volume_Demand_Forecasting.PNG)
+*Crypto volume forecasting with advanced feature engineering and model comparison*
+
+---
+
 ## 🏢 **Supported Financial Instruments**
 
 ### 📊 **Blue-Chip Stocks**
@@ -179,43 +217,7 @@ requests>=2.31.0
 - **R²**: Coefficient of Determination
 - **Confidence Intervals**: Statistical bounds
 
-## 🖼️ **Screenshots & Demo**
 
-### **📊 Stock Market Analysis**
-
-#### **Price and Volume Overview**
-![Stock Market Data - Price and Volume Overview](screenshot/1.Stock_Market_Data_Price_and_Volume_Overview.png)
-*Real-time stock data with candlestick charts, moving averages, and volume analysis*`1
-sss
-#### **Volume Demand Forecasting**
-![Stock Market Data - Volume Demand Forecasting](screenshot/2.Stock_Market_Data_Volume_Demand_Forecasting.PNG)
-*Advanced ML forecasting models predicting future trading volume with confidence intervals*
-
----
-
-### **📈 ETF Analysis**
-
-#### **Price and Volume Overview**
-![ETF Data - Price and Volume Overview](screenshot/3.ETF_Data_Price_and_Volume_Overview.PNG)
-*Professional ETF analysis with technical indicators and market trends*
-
-#### **Volume Demand Forecasting**
-![ETF Data - Volume Demand Forecasting](screenshot/4.ETF_Data_Volume_Demand_Forecasting.PNG)
-*ETF volume prediction using Random Forest and Linear Regression models*
-
----
-
-### **₿ Cryptocurrency Analysis**
-
-#### **Price and Volume Overview**
-![Cryptocurrency - Price and Volume Overview](screenshot/5.Cryptocurrency_Price_and_Volume_Overview.PNG)
-*Cryptocurrency market data with volatility analysis and technical indicators*
-
-#### **Volume Demand Forecasting**
-![Cryptocurrency - Volume Demand Forecasting](screenshot/6.Cryptocurrency_Volume_Demand_Forecasting.PNG)
-*Crypto volume forecasting with advanced feature engineering and model comparison*
-
----
 
 ### **🎯 Key Features Demonstrated**
 - **Multi-Asset Support**: Stocks, ETFs, Cryptocurrencies

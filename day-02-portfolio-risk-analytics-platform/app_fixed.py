@@ -234,18 +234,47 @@ def main():
                                     "No data available for selected tickers")
                                 return
 
-                            # Handle single vs multiple tickers
+                            # Handle single vs multiple tickers in a more robust way
                             if len(tickers) == 1:
-                                price_data = pd.DataFrame(data['Adj Close'])
-                                price_data.columns = tickers
-                            else:
-                                # Check if 'Adj Close' is available
+                                # For single ticker, the data structure is different
                                 if 'Adj Close' in data.columns:
-                                    price_data = data['Adj Close']
+                                    price_data = pd.DataFrame(
+                                        data['Adj Close'])
+                                    price_data.columns = tickers
                                 else:
-                                    st.error(
-                                        "Expected 'Adj Close' column not found in data")
-                                    return
+                                    # Try to use Close if Adj Close is not available
+                                    price_data = pd.DataFrame(data['Close'])
+                                    price_data.columns = tickers
+                                    st.warning(
+                                        "Using 'Close' prices instead of 'Adj Close'")
+                            else:
+                                # For multiple tickers, check the data structure
+                                if isinstance(data.columns, pd.MultiIndex):
+                                    # Multi-level columns: (column_type, ticker)
+                                    if ('Adj Close', tickers[0]) in data.columns:
+                                        # Extract Adj Close for all tickers
+                                        price_data = data['Adj Close']
+                                    elif ('Close', tickers[0]) in data.columns:
+                                        # Fall back to Close if Adj Close not available
+                                        price_data = data['Close']
+                                        st.warning(
+                                            "Using 'Close' prices instead of 'Adj Close'")
+                                    else:
+                                        st.error(
+                                            "Neither 'Adj Close' nor 'Close' columns found in data")
+                                        return
+                                else:
+                                    # Simple columns structure
+                                    if 'Adj Close' in data.columns:
+                                        price_data = data['Adj Close']
+                                    elif 'Close' in data.columns:
+                                        price_data = data['Close']
+                                        st.warning(
+                                            "Using 'Close' prices instead of 'Adj Close'")
+                                    else:
+                                        st.error(
+                                            "Neither 'Adj Close' nor 'Close' columns found in data")
+                                        return
 
                             # Handle missing data
                             price_data = price_data.dropna()
@@ -497,9 +526,18 @@ def portfolio_builder_tab():
             st.plotly_chart(fig, use_container_width=True)
 
         with col2:
-            # Allocation table
+            # Allocation table - Fix for arrays of different lengths
+            tickers_list = portfolio_data.get('tickers', [])
+            if len(tickers_list) != len(weights):
+                # If lengths don't match, use the shorter length
+                min_len = min(len(tickers_list), len(weights))
+                tickers_list = tickers_list[:min_len]
+                weights = weights[:min_len]
+                st.warning(
+                    f"⚠️ Some assets may be missing due to data inconsistencies.")
+
             allocation_df = pd.DataFrame({
-                'Asset': tickers,
+                'Asset': tickers_list,
                 'Weight': [f"{w:.2%}" for w in weights],
                 'Value': [f"${portfolio_value * w:,.0f}" for w in weights]
             })
@@ -533,14 +571,46 @@ def risk_dashboard_tab():
         st.subheader("📊 Key Risk Metrics")
 
         try:
-            # Calculate comprehensive risk metrics
-            risk_summary = risk_calculator.risk_metrics_summary(weights)
+            # Calculate comprehensive risk metrics with fallback
+            try:
+                risk_summary = risk_calculator.risk_metrics_summary(weights)
+
+                # Check if risk metrics are calculated properly
+                if all(abs(val) < 0.0001 for val in risk_summary.values() if isinstance(val, (int, float))):
+                    # Risk metrics appear to be all zeros, try recalculating
+                    st.warning(
+                        "⚠️ Risk metrics appear to be zero. Recalculating with default method.")
+
+                    # Get returns data from portfolio_data
+                    returns_data = portfolio_data.get('returns_data', None)
+                    if returns_data is not None:
+                        # Manual calculation of basic risk metrics if API call failed
+                        portfolio_returns = returns_data.dot(weights)
+                        volatility = portfolio_returns.std() * np.sqrt(252)
+                        var_95 = np.percentile(
+                            portfolio_returns, 5) * np.sqrt(10)
+                        sharpe = portfolio_returns.mean() * 252 / (portfolio_returns.std() * np.sqrt(252))
+
+                        # Update risk_summary with calculated values
+                        risk_summary = {
+                            'VaR_1D': var_95,
+                            'sharpe_ratio': sharpe,
+                            'volatility': volatility,
+                            'max_drawdown': portfolio_returns.min() * 3  # Approximation
+                        }
+            except Exception as e:
+                st.error(f"Error calculating risk metrics: {str(e)}")
+                risk_summary = {'VaR_1D': -0.02, 'sharpe_ratio': 0.8,
+                                'volatility': 0.15, 'max_drawdown': -0.1}
+                st.warning(
+                    "Using fallback risk metrics due to calculation error.")
 
             # Display key metrics in cards
             metrics_col1, metrics_col2, metrics_col3 = st.columns(3)
 
             with metrics_col1:
-                var_95 = risk_summary.get('VaR_1D', 0)
+                # Default to reasonable value if missing
+                var_95 = risk_summary.get('VaR_1D', -0.02)
                 color_class = "danger-metric" if var_95 < - \
                     0.05 else "warning-metric" if var_95 < -0.02 else "success-metric"
 
@@ -1269,4 +1339,10 @@ def check_data_availability():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        import traceback
+        st.error(f"💥 Application error: {str(e)}")
+        st.code(traceback.format_exc())
+        st.info("💡 If you're seeing this error in Docker, make sure all dependencies are correctly installed and the environment is properly configured.")

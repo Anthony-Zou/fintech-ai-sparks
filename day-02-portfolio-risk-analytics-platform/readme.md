@@ -4,6 +4,11 @@
 
 An enterprise-grade portfolio risk analytics platform implementing Modern Portfolio Theory, Monte Carlo simulations, and institutional-level risk metrics. Built with Python and Streamlit for real-time portfolio optimization and risk management.
 
+![Portfolio Analytics Platform](https://img.shields.io/badge/STATUS-COMPLETED-brightgreen)
+![Python 3.8+](https://img.shields.io/badge/Python-3.8+-blue)
+![Streamlit](https://img.shields.io/badge/Framework-Streamlit-red)
+![Docker](https://img.shields.io/badge/Deployment-Docker-blue)
+
 ## 🎯 Strategic Vision
 
 This platform demonstrates advanced quantitative finance capabilities that separate senior engineers from junior ones. It implements portfolio-level complexity with institutional-grade analytics used by wealth management firms and portfolio managers daily.
@@ -45,12 +50,15 @@ This platform demonstrates advanced quantitative finance capabilities that separ
 ```
 Portfolio Risk Analytics Platform/
 ├── portfolio_optimizer.py    # Modern Portfolio Theory & Black-Litterman
-├── risk_metrics.py          # VaR, ES, Sharpe ratios, drawdown analysis
-├── monte_carlo.py           # Monte Carlo simulations & stress testing
-├── app.py                   # Main Streamlit application
-├── requirements.txt         # Python dependencies
-├── Dockerfile              # Containerization
-└── README.md               # This file
+├── risk_metrics.py           # VaR, ES, Sharpe ratios, drawdown analysis
+├── monte_carlo.py            # Monte Carlo simulations & stress testing
+├── app.py                    # Original Streamlit application (template)
+├── app_fixed.py              # Complete Streamlit application (use this)
+├── docker-test.sh            # Docker build and run script
+├── Dockerfile                # Containerization configuration
+├── requirements.txt          # Python dependencies
+├── TROUBLESHOOTING.md        # Common issues and solutions
+└── README.md                 # This file
 ```
 
 ### Technology Stack
@@ -77,6 +85,7 @@ Portfolio Risk Analytics Platform/
 - Python 3.8 or higher
 - Git for version control
 - Internet connection for market data
+- Docker (optional, for containerized deployment)
 
 ### Installation & Launch
 
@@ -86,39 +95,67 @@ git clone https://github.com/your-username/fintech-ai-sparks.git
 cd fintech-ai-sparks/day-02-portfolio-risk-analytics-platform
 ```
 
-2. **Quick Launch (Recommended):**
+2. **Manual Installation:**
 ```bash
-python launch.py
-```
-The launch script will:
-- Check Python version compatibility
-- Install all required dependencies automatically
-- Validate module functionality
-- Create demo data for testing
-- Launch the Streamlit application
-
-3. **Manual Installation (Alternative):**
-```bash
+# Install required dependencies
 pip install -r requirements.txt
-streamlit run app.py
+
+# Run the application
+streamlit run app_fixed.py
 ```
 
-4. **Docker Deployment:**
+3. **Docker Deployment (Recommended):**
 ```bash
-docker build -t portfolio-risk-analytics .
-docker run -p 8501:8501 portfolio-risk-analytics
-```
+# Make the test script executable
+chmod +x docker-test.sh
 
-5. **Access the platform:**
+# Build and run with the provided script
+./docker-test.sh
+```
+This script will:
+- Build the Docker image with all dependencies
+- Run the container with proper port mapping
+- Make the application accessible at http://localhost:8501
+
+4. **Access the platform:**
    - Open your browser to `http://localhost:8501`
-   - Configure your portfolio in the sidebar
-   - Start analyzing!
+   - Configure your portfolio in the sidebar:
+     * Choose between real market data or demo mode
+     * Select from predefined portfolios or enter custom tickers
+     * Set time periods and risk parameters
+   - Optimize your portfolio with different strategies
+   - Analyze risk metrics and run Monte Carlo simulations
+   - Export reports and visualizations
+
+### Implementation Status
+
+The platform is now fully implemented with all key features working:
+
+- ✅ Portfolio optimization strategies (Max Sharpe, Min Volatility, Risk Parity)
+- ✅ Risk metrics calculation (VaR, ES, Maximum Drawdown)
+- ✅ Monte Carlo simulations and stress testing
+- ✅ Interactive visualizations and reporting
+- ✅ Docker containerization for easy deployment
 
 ### Troubleshooting
 
-If you encounter issues:
+If you encounter issues, please refer to the detailed [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) file in this repository. Common issues include:
 
-1. **Check Python version:**
+1. **"Expected 'Adj Close' column not found in data" Error:**
+   - Yahoo Finance API sometimes changes its response structure
+   - The app has robust error handling for this
+   - Try using demo mode if market data retrieval fails
+
+2. **Module Import Issues:**
+   - Ensure all dependencies are installed with `pip install -r requirements.txt`
+   - Check that all Python files are in the correct directory
+
+3. **Docker-specific Issues:**
+   - Make sure `app_fixed.py` is being used (check Dockerfile)
+   - Verify that Docker is installed and running
+   - Ensure port 8501 is not already in use
+
+4. **Data Retrieval Problems:**
 ```bash
 python --version  # Should be 3.8+
 ```

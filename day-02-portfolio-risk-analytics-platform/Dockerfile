@@ -15,4 +15,5 @@ COPY . .
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "app.py", "--server.address", "0.0.0.0"]
+# Changed from app.py to app_fixed.py to use the fixed version of the application
+CMD ["streamlit", "run", "app_fixed.py", "--server.address", "0.0.0.0"]

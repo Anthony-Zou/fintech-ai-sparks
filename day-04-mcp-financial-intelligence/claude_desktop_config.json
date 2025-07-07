@@ -3,7 +3,7 @@
     "financial-intelligence": {
       "command": "/usr/local/bin/python3.10",
       "args": [
-        "/Users/anthonyzeren/Documents/Professional/fintech/fintech_ai_sparks/day-04-mcp-financial-intelligence/claude_desktop_fixed.py"
+        "/Users/anthonyzeren/Documents/Professional/fintech/fintech_ai_sparks/day-04-mcp-financial-intelligence/claude_desktop_mcp_server.py"
       ]
     }
   },

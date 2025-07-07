@@ -1,1 +1,70 @@
+# Virtual environments
 mcp/mcp_venv
+venv/
+env/
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Development artifacts
+*_fixed.py
+*_debug.py
+*_temp.py
+*_backup.py
+*_old.py
+*_test.py
+*_working.py
+*_draft.py
+
+# Test results and logs
+test_results.json
+simple_test_results.json
+*.log
+logs/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Configuration files with credentials
+config.env
+*.env
+!config.env.example
+
+# Temporary files
+*.tmp
+*.temp

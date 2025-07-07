@@ -1,0 +1,64 @@
+{
+  "test_suite": "simple_mcp_integration",
+  "start_time": 1751857951.868625,
+  "tests": {
+    "market_analysis": {
+      "test_name": "market_analysis",
+      "status": "passed",
+      "start_time": 1751857951.8686311,
+      "symbols_analyzed": 2,
+      "has_forecasts": true,
+      "has_recommendations": true,
+      "response_size": 7992,
+      "duration": 0.0014078617095947266
+    },
+    "portfolio_optimization": {
+      "test_name": "portfolio_optimization",
+      "status": "passed",
+      "start_time": 1751857951.8700511,
+      "has_weights": true,
+      "has_metrics": true,
+      "optimization_method": "max_sharpe",
+      "num_assets": 4,
+      "duration": 0.000293731689453125
+    },
+    "risk_metrics": {
+      "test_name": "risk_metrics",
+      "status": "passed",
+      "start_time": 1751857951.8703501,
+      "has_var": true,
+      "has_sharpe": true,
+      "portfolio_value": 100000,
+      "confidence_levels": 2,
+      "duration": 0.0003447532653808594
+    },
+    "financial_insights": {
+      "test_name": "financial_insights",
+      "status": "passed",
+      "start_time": 1751857951.870701,
+      "has_insights": true,
+      "has_recommendations": true,
+      "symbols_analyzed": 4,
+      "market_outlook": "NEUTRAL_TO_BULLISH",
+      "duration": 0.0005819797515869141
+    },
+    "trading_functionality": {
+      "test_name": "trading_functionality",
+      "status": "passed",
+      "start_time": 1751857951.8712919,
+      "strategy_executed": true,
+      "has_positions": true,
+      "strategy_type": "momentum",
+      "execution_mode": null,
+      "duration": 0.0009970664978027344
+    }
+  },
+  "end_time": 1751857951.872299,
+  "total_duration": 0.003674030303955078,
+  "summary": {
+    "total_tests": 5,
+    "passed_tests": 5,
+    "failed_tests": 0,
+    "success_rate": 100.0
+  }
+}

@@ -1,0 +1,142 @@
+version: "3.8"
+
+services:
+  # MCP Financial Intelligence Server
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: mcp-financial-server
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - MCP_SERVER_NAME=financial-intelligence
+      - LOG_LEVEL=INFO
+      - ENVIRONMENT=production
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./config.env:/app/config.env:ro
+    depends_on:
+      - redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - mcp-network
+
+  # Streamlit Dashboard
+  streamlit-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: mcp-streamlit-dashboard
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONPATH=/app
+      - MCP_SERVER_HOST=mcp-server
+      - MCP_SERVER_PORT=8000
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - mcp-server
+    restart: unless-stopped
+    command:
+      [
+        "streamlit",
+        "run",
+        "client/streamlit_dashboard.py",
+        "--server.address",
+        "0.0.0.0",
+        "--server.port",
+        "8501",
+      ]
+    networks:
+      - mcp-network
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: mcp-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    networks:
+      - mcp-network
+
+  # Prometheus for monitoring (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: mcp-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--web.enable-lifecycle"
+    depends_on:
+      - mcp-server
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  # Grafana for dashboards (optional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: mcp-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  # Nginx reverse proxy (optional)
+  nginx:
+    image: nginx:alpine
+    container_name: mcp-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - mcp-server
+      - streamlit-dashboard
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+volumes:
+  redis-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  mcp-network:
+    driver: bridge

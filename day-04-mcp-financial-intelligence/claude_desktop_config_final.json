@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "financial-intelligence": {
+      "command": "/usr/local/bin/python3.10",
+      "args": [
+        "/Users/anthonyzeren/Documents/Professional/fintech/fintech_ai_sparks/day-04-mcp-financial-intelligence/claude_desktop_fixed.py"
+      ]
+    }
+  },
+  "globalShortcut": "Ctrl+Shift+M",
+  "theme": "dark",
+  "mcpSettings": {
+    "timeout": 30000,
+    "retries": 3,
+    "logLevel": "warning"
+  }
+} 

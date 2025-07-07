@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "financial-intelligence": {
+      "command": "python3.10",
+      "args": ["-m", "mcp_server.main_fixed"],
+      "cwd": "/Users/anthonyzeren/Documents/Professional/fintech/fintech_ai_sparks/day-04-mcp-financial-intelligence",
+      "env": {
+        "PYTHONPATH": "/Users/anthonyzeren/Documents/Professional/fintech/fintech_ai_sparks/day-04-mcp-financial-intelligence",
+        "MCP_SERVER_NAME": "financial-intelligence",
+        "LOG_LEVEL": "WARNING"
+      }
+    }
+  },
+  "globalShortcut": "Ctrl+Shift+M",
+  "theme": "dark",
+  "mcpSettings": {
+    "timeout": 30000,
+    "retries": 3,
+    "logLevel": "warning"
+  }
+} 

@@ -1,0 +1,236 @@
+# MCP Financial Intelligence Platform Configuration
+# Model Context Protocol server configuration for unified financial intelligence
+
+server:
+  name: "financial-intelligence"
+  version: "1.0.0"
+  description: "Unified financial intelligence platform with MCP integration"
+  host: "localhost"
+  port: 8000
+  timeout: 30
+  max_retries: 3
+  log_level: "INFO"
+
+# Platform Integration Settings
+platforms:
+  day1_market_analysis:
+    enabled: true
+    module: "integration.day1_connector"
+    config:
+      data_source: "yahoo_finance"
+      cache_duration: 300 # 5 minutes
+      max_symbols: 50
+      forecast_methods:
+        - "linear_regression"
+        - "random_forest"
+        - "arima"
+
+  day2_portfolio_risk:
+    enabled: true
+    module: "integration.day2_connector"
+    config:
+      optimization_methods:
+        - "max_sharpe"
+        - "min_volatility"
+        - "risk_parity"
+        - "black_litterman"
+      monte_carlo:
+        default_simulations: 10000
+        max_simulations: 100000
+        default_horizon: 252
+      risk_metrics:
+        var_confidence_levels: [0.90, 0.95, 0.99]
+        stress_scenarios:
+          - "market_crash"
+          - "high_volatility"
+          - "recession"
+          - "bull_market"
+
+  day3_algorithmic_trading:
+    enabled: true
+    module: "integration.day3_connector"
+    config:
+      strategies:
+        - "momentum"
+        - "mean_reversion"
+        - "pairs_trading"
+        - "breakout"
+      order_types:
+        - "market"
+        - "limit"
+        - "stop"
+        - "stop_limit"
+      risk_management:
+        max_position_size: 0.1 # 10% of portfolio
+        stop_loss_threshold: 0.05 # 5% stop loss
+        take_profit_threshold: 0.15 # 15% take profit
+
+# MCP Tools Configuration
+tools:
+  analyze_market_trends:
+    enabled: true
+    timeout: 60
+    cache_results: true
+    cache_duration: 900 # 15 minutes
+    max_symbols: 20
+
+  optimize_portfolio:
+    enabled: true
+    timeout: 120
+    max_assets: 50
+    default_method: "max_sharpe"
+
+  calculate_risk_metrics:
+    enabled: true
+    timeout: 60
+    default_confidence: 0.95
+
+  monte_carlo_simulation:
+    enabled: true
+    timeout: 300 # 5 minutes for large simulations
+    default_simulations: 10000
+    max_simulations: 100000
+
+  execute_trading_strategy:
+    enabled: true
+    timeout: 30
+    paper_trading_only: true # Safety setting
+
+  manage_positions:
+    enabled: true
+    timeout: 15
+
+  generate_financial_insights:
+    enabled: true
+    timeout: 180 # 3 minutes for AI analysis
+    use_ai_analysis: true
+
+  portfolio_rebalancing_advice:
+    enabled: true
+    timeout: 90
+    default_frequency: "quarterly"
+
+# Data Sources Configuration
+data_sources:
+  yahoo_finance:
+    enabled: true
+    api_key: null # Not required for Yahoo Finance
+    rate_limit: 2000 # requests per hour
+    timeout: 10
+
+  alpha_vantage:
+    enabled: false
+    api_key: "${ALPHA_VANTAGE_API_KEY}"
+    rate_limit: 500
+    timeout: 10
+
+  quandl:
+    enabled: false
+    api_key: "${QUANDL_API_KEY}"
+    rate_limit: 50000
+    timeout: 10
+
+# Security Configuration
+security:
+  api_key_required: false
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 60
+    burst_limit: 100
+  cors:
+    enabled: true
+    allowed_origins:
+      - "http://localhost:8501" # Streamlit default
+      - "http://localhost:3000" # React default
+    allowed_methods:
+      - "GET"
+      - "POST"
+      - "OPTIONS"
+
+# Caching Configuration
+cache:
+  enabled: true
+  backend: "memory" # Options: memory, redis, file
+  default_ttl: 300 # 5 minutes
+  max_size: 1000 # Maximum number of cached items
+
+  # Redis configuration (if backend is redis)
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: null
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+  file: "logs/mcp_server.log"
+  rotation: "daily"
+  retention: 30 # days
+  console_output: true
+
+# Performance Configuration
+performance:
+  max_concurrent_requests: 10
+  request_timeout: 300 # 5 minutes
+  connection_pool_size: 20
+  enable_compression: true
+
+# Database Configuration (if needed for persistence)
+database:
+  enabled: false
+  type: "sqlite" # Options: sqlite, postgresql, mysql
+  url: "sqlite:///data/mcp_financial.db"
+
+  # PostgreSQL configuration
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "mcp_financial"
+    username: "${DB_USERNAME}"
+    password: "${DB_PASSWORD}"
+
+# Monitoring and Health Checks
+monitoring:
+  health_check_interval: 30 # seconds
+  metrics_enabled: true
+  export_prometheus_metrics: false
+
+  alerts:
+    enabled: false
+    email_recipients: []
+    slack_webhook: null
+
+# Environment-specific Overrides
+environments:
+  development:
+    server:
+      log_level: "DEBUG"
+    tools:
+      execute_trading_strategy:
+        paper_trading_only: true
+    cache:
+      enabled: false
+
+  production:
+    server:
+      log_level: "WARNING"
+    security:
+      api_key_required: true
+      rate_limiting:
+        requests_per_minute: 120
+    cache:
+      backend: "redis"
+    monitoring:
+      health_check_interval: 15
+      metrics_enabled: true
+      export_prometheus_metrics: true
+
+# Feature Flags
+features:
+  experimental_ai_insights: true
+  cross_platform_analysis: true
+  real_time_streaming: false
+  advanced_risk_models: true
+  automated_rebalancing: false

@@ -6,19 +6,22 @@ Real-time settlement optimization across traditional banking rails,
 stablecoin bridges, and direct cryptocurrency settlement.
 """
 
-from settlement_engine.settlement_optimizer import SettlementOptimizer, UrgencyLevel, RiskTolerance, SettlementPreferences
-from settlement_engine.currency_converter import CurrencyConverter
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+from datetime import datetime, timedelta
 import asyncio
+import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
+import streamlit as st
+from settlement_engine.currency_converter import CurrencyConverter
+from settlement_engine.settlement_optimizer import SettlementOptimizer, UrgencyLevel, RiskTolerance, SettlementPreferences
 import sys
 import os
-from datetime import datetime, timedelta
-
-# Add parent directory to path for imports
+# Add parent directory to path for imports BEFORE any settlement_engine imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Now import settlement_engine modules
+
+# Standard library and third-party imports
 
 
 # Page configuration

@@ -3,6 +3,7 @@ mcp/mcp_venv
 venv/
 env/
 .venv/
+mcp/
 
 # Python cache files
 __pycache__/

@@ -315,20 +315,49 @@ cd day-05-crossborder-settlement
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Run the platform
-streamlit run ui/app.py
 ```
 
-### Running the Demo
+### Running the Platform
+
+#### Option 1: Using the Launcher Script (Recommended)
 
 ```bash
-# Start the settlement platform
-streamlit run ui/app.py --server.port 8501
+# Start the settlement platform with proper Python path setup
+python launch_app.py
 
-# Access the platform
-# Open browser to http://localhost:8501
+# Access the platform at http://localhost:8505
 ```
+
+#### Option 2: Using Streamlit Directly
+
+```bash
+# Start from the project root directory
+streamlit run ui/app.py --server.port 8505
+
+# Access the platform at http://localhost:8505
+```
+
+#### Option 3: Using the Shell Script
+
+```bash
+# If you have a virtual environment set up
+./run_app.sh
+```
+
+### Platform Access
+
+Once started, the platform will be available at:
+
+- **Local URL**: http://localhost:8505
+- **Network URL**: http://[your-ip]:8505
+
+The platform includes:
+
+- 🧮 **Settlement Calculator**: Real-time route optimization
+- 📊 **Market Analytics**: Comprehensive market intelligence
+- 💼 **Business Intelligence**: KPI tracking and performance metrics
+- 📈 **ROI Calculator**: Enterprise return on investment analysis
+- 🌍 **Corridor Analysis**: Deep-dive analysis of payment corridors
 
 ## 📊 Platform Modules
 
